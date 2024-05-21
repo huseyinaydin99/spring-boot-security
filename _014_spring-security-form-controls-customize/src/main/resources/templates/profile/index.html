@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:insert="fragments.html :: headerfiles"></head>
+
+<body>
+	<header th:insert="fragments.html :: nav"></header>
+	<!-- Page content goes here -->
+	<div class="container">
+		<p>Burası kullanıcı Profile\Index. Sadece kimlik doğrulayanlar görebilir.</p>
+		<table>
+			<tr>
+				<td>Kullanıcı adı</td>
+				<td><span sec:authentication="name"></span></td>
+			</tr>
+			<tr>
+				<td>Yetkiler</td>
+				<td><span sec:authentication="principal.authorities"></span></td>
+			</tr>
+		</table>
+
+		<div sec:authorize="hasRole('USER')">
+			<hr> Bu yazıyı sadece User yetkisine sahip olanlar görebilir.
+		</div>
+		<div sec:authorize="hasRole('ADMIN')">
+			<hr> Bu yazıyı sadece Admin yetkisine sahip olanlarr görebilir.
+		</div>
+		<div sec:authorize="isAuthenticated()">
+			<hr> Bu yazıyı sadece kimlik doğrulayanlar görebilir.
+		</div>
+	</div>
+</body>
+
+</html>
